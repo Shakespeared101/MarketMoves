@@ -1,0 +1,146 @@
+# --------------------------
+# Core FastAPI dependencies
+# --------------------------
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+python-multipart==0.0.6
+
+# --------------------------
+# Database drivers
+# --------------------------
+aiosqlite==0.19.0
+duckdb==0.10.0
+neo4j==5.16.0
+
+# --------------------------
+# Financial data ingestion
+# --------------------------
+yfinance==0.2.36
+pandas==2.2.0
+numpy==1.26.3
+
+# --------------------------
+# SEC Edgar
+# --------------------------
+sec-api==1.0.17
+sec-edgar-downloader==5.0.3
+beautifulsoup4==4.12.3
+lxml==5.1.0
+
+# --------------------------
+# News APIs
+# --------------------------
+newsapi-python==0.2.7
+requests==2.31.0
+
+# --------------------------
+# LangChain Ecosystem (RAG)
+# --------------------------
+langchain==0.1.5
+langchain-community==0.0.17
+langgraph==0.0.20
+langsmith==0.0.83
+
+# --------------------------
+# Embeddings & Vector Stores
+# --------------------------
+sentence-transformers==2.3.1
+chromadb==0.4.22
+faiss-cpu==1.7.4
+
+# --------------------------
+# LLM Integration (Ollama)
+# --------------------------
+ollama==0.1.6
+httpx==0.25.2
+
+# --------------------------
+# NLP & Text Processing
+# --------------------------
+transformers==4.37.2
+torch==2.2.0
+tokenizers==0.15.1
+nltk==3.8.1
+spacy==3.7.2
+
+# --------------------------
+# Sentiment Analysis
+# --------------------------
+vaderSentiment==3.3.2
+textblob==0.18.0
+
+# --------------------------
+# Data processing / ML
+# --------------------------
+scikit-learn==1.4.0
+scipy==1.12.0
+
+# --------------------------
+# Clustering (RAPTOR)
+# --------------------------
+hdbscan==0.8.33
+umap-learn==0.5.5
+
+# --------------------------
+# Async Support (non-stdlib)
+# --------------------------
+aiohttp==3.9.3
+aiofiles==23.2.1
+# asyncio removed — built-in
+
+# --------------------------
+# Caching
+# --------------------------
+redis==5.0.1
+cachetools==5.3.2
+
+# --------------------------
+# Utilities
+# --------------------------
+python-dotenv==1.0.1
+pytz==2024.1
+python-dateutil==2.8.2
+
+# --------------------------
+# Logging
+# --------------------------
+loguru==0.7.2
+
+# --------------------------
+# Testing
+# --------------------------
+pytest==7.4.4
+pytest-asyncio==0.23.4
+
+# --------------------------
+# Data validation extras
+# --------------------------
+pydantic[email]==2.5.3
+
+# --------------------------
+# API documentation
+# --------------------------
+markdown==3.5.2
+
+# --------------------------
+# Background tasks / Scheduling
+# --------------------------
+celery==5.3.6
+
+# --------------------------
+# Financial Calculations
+# --------------------------
+pandas
+
+# --------------------------
+# Graph Algorithms
+# --------------------------
+networkx==3.2.1
+
+# --------------------------
+# Export Capabilities
+# --------------------------
+openpyxl==3.1.2
+xlsxwriter==3.1.9

@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Neo4j Knowledge Graph Database
+  neo4j:
+    image: neo4j:5.16-community
+    container_name: marketmoves-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/marketmoves
+      - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*,gds.*
+      - NEO4J_dbms_memory_heap_initial__size=512m
+      - NEO4J_dbms_memory_heap_max__size=2g
+      - NEO4J_dbms_memory_pagecache_size=512m
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+    networks:
+      - marketmoves-network
+    restart: unless-stopped
+
+  # Redis for caching and Celery broker
+  redis:
+    image: redis:7-alpine
+    container_name: marketmoves-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - marketmoves-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Ollama for local LLM inference (optional - can run separately)
+  # Uncomment if you want to run Ollama in Docker
+  # Note: Requires GPU support for optimal performance
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: marketmoves-ollama
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   networks:
+  #     - marketmoves-network
+  #   restart: unless-stopped
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+
+volumes:
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  neo4j_import:
+    driver: local
+  neo4j_plugins:
+    driver: local
+  redis_data:
+    driver: local
+  # ollama_data:
+  #   driver: local
+
+networks:
+  marketmoves-network:
+    driver: bridge
