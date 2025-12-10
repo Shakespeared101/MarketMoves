@@ -62,9 +62,9 @@ class Settings(BaseSettings):
     TOP_K_RETRIEVAL: int = 5
 
     # Data source API keys (optional - many sources are free)
-    SEC_EDGAR_USER_AGENT: str = "MarketMoves contact@example.com"
-    NEWSAPI_KEY: str = ""  # Get free key from newsapi.org
-    ALPHA_VANTAGE_KEY: str = ""  # Optional - for additional financial data
+    SEC_EDGAR_USER_AGENT: str = "shakthi3203@gmail.com"
+    NEWSAPI_KEY: str = "c01db65867dd4b31b8476f2e7fc6532e"  # Get free key from newsapi.org
+    ALPHA_VANTAGE_KEY: str = "FGWYIAF1HGILFPV4"  # Optional - for additional financial data
 
     # Data ingestion settings
     MAX_COMPANIES_TO_TRACK: int = 50
