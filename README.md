@@ -8,6 +8,8 @@ A comprehensive data visualization and risk intelligence platform that combines 
 ![Tech Stack](https://img.shields.io/badge/Graph-Neo4j-008CC1)
 ![Tech Stack](https://img.shields.io/badge/LLM-Ollama-000000)
 
+<img width="2557" height="1091" alt="Screenshot 2025-12-10 at 9 02 54 AM" src="https://github.com/user-attachments/assets/01dc0ed3-aa3c-4754-a6c1-f37690e9e3fc" />
+
 ## Features
 
 ### Core Capabilities
