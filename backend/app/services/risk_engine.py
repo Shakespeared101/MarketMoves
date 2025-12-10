@@ -11,6 +11,7 @@ import logging
 from app.config import settings
 from app.database.sqlite_manager import db_manager
 from app.database.duckdb_analytics import analytics
+from app.database.neo4j_manager import neo4j_manager
 
 logger = logging.getLogger(__name__)
 
@@ -84,16 +85,46 @@ class RiskEngine:
             logger.error(f"Error calculating sentiment score for {ticker}: {e}")
             return 5.0
 
-    def calculate_litigation_score(self, ticker: str) -> float:
+    async def calculate_litigation_score(self, ticker: str) -> float:
         """
         Calculate litigation risk score (0-10)
 
         Based on number and severity of lawsuits (from Neo4j graph)
         """
         try:
-            # TODO: Query Neo4j for lawsuit count and severity
-            # Placeholder implementation
-            return 3.0  # Default low-medium risk
+            # Check if Neo4j is available
+            if not neo4j_manager.driver:
+                logger.warning(f"Neo4j unavailable for litigation score - using default")
+                return 3.0
+
+            # Query Neo4j for lawsuit data
+            lawsuit_data = await neo4j_manager.get_lawsuits_for_risk(ticker)
+
+            lawsuit_count = lawsuit_data.get('lawsuit_count', 0)
+            avg_impact = lawsuit_data.get('avg_impact', 0.0)
+            high_severity_count = lawsuit_data.get('high_severity_count', 0)
+
+            if lawsuit_count == 0:
+                return 1.0  # Low risk - no active lawsuits
+
+            # Calculate score based on:
+            # - Number of lawsuits (0-5 points)
+            # - Average impact (0-3 points)
+            # - High severity count (0-2 points)
+
+            count_score = min(5.0, (lawsuit_count / 5.0) * 5.0)  # 5+ lawsuits = 5 points
+            impact_score = min(3.0, (avg_impact / 5.0) * 3.0)     # Impact 5+ = 3 points
+            severity_score = min(2.0, (high_severity_count / 3.0) * 2.0)  # 3+ high severity = 2 points
+
+            total_score = count_score + impact_score + severity_score
+
+            logger.info(
+                f"Litigation score for {ticker}: {total_score:.2f} "
+                f"(lawsuits: {lawsuit_count}, avg_impact: {avg_impact:.2f}, "
+                f"high_severity: {high_severity_count})"
+            )
+
+            return round(total_score, 2)
 
         except Exception as e:
             logger.error(f"Error calculating litigation score for {ticker}: {e}")
@@ -151,7 +182,7 @@ class RiskEngine:
             # Calculate individual scores
             volatility_score = self.calculate_volatility_score(ticker)
             sentiment_score = await self.calculate_sentiment_score(ticker)
-            litigation_score = self.calculate_litigation_score(ticker)
+            litigation_score = await self.calculate_litigation_score(ticker)
             financial_score = self.calculate_financial_anomaly_score(ticker)
             regulatory_score = self.calculate_regulatory_score(ticker)
 

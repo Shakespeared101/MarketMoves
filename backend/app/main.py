@@ -102,11 +102,12 @@ async def api_status():
 
 
 # API Routes
-from app.api.routes import market_data, risk_analysis, insights
+from app.api.routes import market_data, risk_analysis, insights, entity_graph
 
 app.include_router(market_data.router, prefix="/api/v1/market", tags=["Market Data"])
 app.include_router(risk_analysis.router, prefix="/api/v1/risk", tags=["Risk Analysis"])
 app.include_router(insights.router, prefix="/api/v1/insights", tags=["LLM Insights"])
+app.include_router(entity_graph.router, prefix="/api/v1/entity", tags=["Entity Graph"])
 
 
 if __name__ == "__main__":
