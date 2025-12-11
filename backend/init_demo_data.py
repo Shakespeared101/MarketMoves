@@ -52,6 +52,10 @@ async def initialize():
         'GOOGL', # Google
         'AMZN',  # Amazon
         'TSLA',  # Tesla
+        'NVDA',  # NVIDIA
+        'META',  # Meta (Facebook)
+        'JPM',   # JPMorgan Chase
+        'PGINVIT'
     ]
 
     companies_loaded = []
